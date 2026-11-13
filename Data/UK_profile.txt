@@ -1,0 +1,55 @@
+UK DfT road casualty statistics — collisions 2024
+source: UK Department for Transport, obtained via Kaggle
+rows: 100,927   columns kept: 21   duplicates: 0
+
+Target — collision_severity
+  Fatal       1,502    1.49%
+  Serious    23,567   23.35%
+  Slight     75,858   75.16%
+  imbalance ratio 51 : 1
+
+DfT 'missing/unknown' codes per column (-1, and 9 or 99 where they mean unknown) — treat as missing, not a category
+  road_type                                       2,568    2.5%
+  speed_limit                                         3    0.0%
+  junction_detail                                13,364   13.2%
+  junction_control                               44,489   44.1%
+  second_road_class                              11,167   11.1%
+  pedestrian_crossing                             4,046    4.0%
+  light_conditions                                    6    0.0%
+  weather_conditions                              3,145    3.1%
+  road_surface_conditions                         2,374    2.4%
+  special_conditions_at_site                     61,971   61.4%
+  carriageway_hazards                             3,083    3.1%
+  urban_or_rural_area                                 3    0.0%
+
+Columns kept
+  collision_index                               text     100927 distinct
+  collision_year                                numeric       1 distinct
+  collision_severity                            text          3 distinct
+  date                                          text        366 distinct
+  day_of_week                                   numeric       7 distinct
+  time                                          text       1439 distinct
+  first_road_class                              numeric       6 distinct
+  road_type                                     numeric       6 distinct
+  speed_limit                                   numeric       7 distinct
+  junction_detail                               numeric       7 distinct
+  junction_control                              numeric       6 distinct
+  second_road_class                             numeric       8 distinct
+  pedestrian_crossing                           numeric      10 distinct
+  light_conditions                              numeric       6 distinct
+  weather_conditions                            numeric       9 distinct
+  road_surface_conditions                       numeric       7 distinct
+  special_conditions_at_site                    numeric      10 distinct
+  carriageway_hazards                           numeric      14 distinct
+  urban_or_rural_area                           numeric       3 distinct
+  number_of_vehicles                            numeric      15 distinct
+  local_authority_ons_district                  text        351 distinct
+
+Note: junction_control is -1 for most collisions that are not at a junction,
+so its -1 count is mostly 'not applicable', not truly missing.
+Note: special_conditions_at_site is -1 for about 59% of rows because many police
+forces now report through CRASH, which does not fill this field.
+
+Note: most columns are integer CODES, not labels. The DfT publishes a lookup
+table ('Road Safety Open Dataset Data Guide') that maps each code to its meaning.
+Map them before you plot or run SHAP, or your figures will be unreadable.

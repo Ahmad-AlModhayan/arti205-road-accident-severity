@@ -1,0 +1,129 @@
+TY  - JOUR
+AU  - Alanazi, Fayez
+AU  - Umar, Ibrahim Khalil
+AU  - Yosri, Ahmed M.
+AU  - Okail, Mohamed Ahmed
+TI  - Comparative evaluation of deep learning and traditional models for predicting traffic accident severity in Saudi Arabia
+JO  - Scientific Reports
+VL  - 15
+SP  - 32568
+PY  - 2025
+DO  - 10.1038/s41598-025-13484-4
+ER  - 
+
+TY  - JOUR
+AU  - Santos, Kenny
+AU  - Dias, João P.
+AU  - Amado, Conceição
+TI  - A literature review of machine learning algorithms for crash injury severity prediction
+JO  - Journal of Safety Research
+VL  - 80
+SP  - 254
+EP  - 269
+PY  - 2022
+DO  - 10.1016/j.jsr.2021.12.007
+ER  - 
+
+TY  - JOUR
+AU  - Aldhari, Ibrahim
+AU  - Almoshaogeh, Meshal
+AU  - Jamal, Arshad
+AU  - Alharbi, Fawaz
+AU  - Alinizzi, Majed
+AU  - Haider, Husnain
+TI  - Severity prediction of highway crashes in Saudi Arabia using machine learning techniques
+JO  - Applied Sciences
+VL  - 13
+IS  - 1
+SP  - 233
+PY  - 2023
+DO  - 10.3390/app13010233
+ER  - 
+
+TY  - JOUR
+AU  - Minhas, Khurram Shahid
+AU  - Dalhat, M. A.
+TI  - Crash severity determinants in Saudi Arabia's Eastern Province: Evidence from logistic regression and neural networks
+JO  - Traffic Injury Prevention
+SP  - 1
+EP  - 9
+PY  - 2026
+DA  - 2026/07/02
+DO  - 10.1080/15389588.2026.2688456
+ER  - 
+
+TY  - JOUR
+AU  - Ahmed, Shakil
+AU  - Hossain, Md Akbar
+AU  - Ray, Sayan Kumar
+AU  - Bhuiyan, Md Mafijul Islam
+AU  - Sabuj, Saifur Rahman
+TI  - A study on road accident prediction and contributing factors using explainable machine learning models: Analysis and performance
+JO  - Transportation Research Interdisciplinary Perspectives
+VL  - 19
+SP  - 100814
+PY  - 2023
+DO  - 10.1016/j.trip.2023.100814
+ER  - 
+
+TY  - JOUR
+AU  - Alanazi, Fayez
+AU  - Okail, Mohamed Ahmed
+TI  - Predicting traffic crash severity in Jeddah using machine learning techniques: A data-driven approach to road safety
+JO  - Transportation Research Record
+VL  - 2679
+IS  - 9
+SP  - 324
+EP  - 343
+PY  - 2025
+DO  - 10.1177/03611981251337460
+ER  - 
+
+TY  - JOUR
+AU  - Rahim, Md Adilur
+AU  - Hassan, Hany M.
+TI  - A deep learning based traffic crash severity prediction framework
+JO  - Accident Analysis & Prevention
+VL  - 154
+SP  - 106090
+PY  - 2021
+DO  - 10.1016/j.aap.2021.106090
+ER  - 
+
+TY  - JOUR
+AU  - Kotsyubynska, Yuliia
+AU  - Kozan, Nataliia
+AU  - Chadiuk, Valeriia
+AU  - Kostyshyn, Andrii
+AU  - Kotsyubynsky, Andrii
+AU  - Fentsyk, Vasyl
+TI  - Machine learning and deep learning for predicting traffic crash injury severity: A systematic review and meta-analysis (2014–2025)
+JO  - Journal of Road Safety
+VL  - 37
+IS  - 1
+SP  - 46
+EP  - 60
+PY  - 2026
+DO  - 10.33492/JRS-D-26-1-2721386
+ER  - 
+
+TY  - JOUR
+AU  - Fiorentini, Nicholas
+AU  - Losa, Massimo
+TI  - Handling imbalanced data in road crash severity prediction by machine learning algorithms
+JO  - Infrastructures
+VL  - 5
+IS  - 7
+SP  - 61
+PY  - 2020
+DO  - 10.3390/infrastructures5070061
+ER  - 
+
+TY  - DATA
+AU  - UK Department for Transport
+TI  - Road Safety Data – Collisions 2024
+PB  - Kaggle
+PY  - 2024
+UR  - https://www.kaggle.com/datasets/juharimat/road-safety-data-collisions-2024
+Y2  - 2026/09/28
+ER  - 

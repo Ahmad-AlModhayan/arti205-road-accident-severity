@@ -1,0 +1,20 @@
+# OS & Python artifacts
+.DS_Store
+**/.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+Analysis/results/progress.log
+
+# Local course templates, rubrics, lecture slides, drafts & internal notes
+ARTI 308 Course Project Description 2026.docx
+ARTI 308 Project Proposal Template - 2026.docx
+ARTI 308 Template project topic selecteion and brainstorming 2026.docx
+Literature/ARTI 205 - Literature Review - Accident Severity (backup).docx
+Literature/Lecture 03 - Literature Review.pdf
+Literature/ML - Literature Review Template(2026-2027).docx
+Literature/ML- Literature Review Grading rubrics (Assignment 1)-2026-2027.docx
+Literature/Submission checklist — 28 Sep.md
+Presentation/ARTI 205 Group 3 – Accident Severity.pptx

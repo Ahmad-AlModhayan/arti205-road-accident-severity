@@ -1,0 +1,5 @@
+model,best parameters,CV macro F1,std,candidates,minutes
+Logistic Regression,{'C': 0.01},0.3297273780540796,0.0029768869017232445,4,0.6
+Random Forest,"{'max_depth': None, 'min_samples_leaf': 5}",0.3773627913761898,0.004207983373112688,6,12.1
+XGBoost,"{'learning_rate': 0.1, 'max_depth': 6, 'n_estimators': 600}",0.37550434419336687,0.0034519039000940094,8,5.2
+Neural network (MLP),"{'alpha': 0.01, 'hidden_layer_sizes': (128, 64)}",0.3473820110586835,0.007939133650736355,4,1.8

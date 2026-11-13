@@ -1,0 +1,21 @@
+{
+  "Logistic Regression": {
+    "C": 0.01
+  },
+  "Random Forest": {
+    "max_depth": null,
+    "min_samples_leaf": 5
+  },
+  "XGBoost": {
+    "learning_rate": 0.1,
+    "max_depth": 6,
+    "n_estimators": 600
+  },
+  "Neural network (MLP)": {
+    "alpha": 0.01,
+    "hidden_layer_sizes": [
+      128,
+      64
+    ]
+  }
+}
