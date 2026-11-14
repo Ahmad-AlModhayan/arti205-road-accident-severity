@@ -8,9 +8,9 @@
 
 | | |
 |---|---|
-| Originator | UK Department for Transport — police STATS19 collision returns, published under the Open Government Licence |
-| Obtained from | Kaggle — https://www.kaggle.com/datasets/juharimat/road-safety-data-collisions-2024 |
-| File | `dft-road-casualty-statistics-collision-2024.csv` (19.6 MB, the DfT's own file name) |
+| Originator | UK Department for Transport — police STATS19 collision & vehicle returns, published under the Open Government Licence |
+| Obtained from | Kaggle (`dft-road-casualty-statistics-collision-2024.csv`) and UK DfT Open Data (`dft-road-casualty-statistics-vehicle-2024.csv`) |
+| Files | `dft-road-casualty-statistics-collision-2024.csv` (19.6 MB) and `dft-road-casualty-statistics-vehicle-2024.csv` (20.3 MB) |
 | Years | 2024 only (`collision_year` = 2024 in every row) |
 
 Cite the Department for Transport as the author and Kaggle as where it was obtained. This is reference [10] in the literature review:
@@ -19,7 +19,7 @@ Cite the Department for Transport as the author and Kaggle as where it was obtai
 
 ## What is in it
 
-- **100,927 collisions × 44 columns**, no duplicate rows, one row per collision.
+- **100,927 collisions × 44 columns** (joined with **183,514 vehicle records × 32 columns** on `collision_index`), no duplicate collision rows, one row per collision.
 - **Target:** `collision_severity` — 3 classes
 
 | Class | Collisions | Share |
@@ -34,10 +34,11 @@ Imbalance ratio **51 : 1** (Slight : Fatal).
 
 | File | What it is |
 |---|---|
-| `dft-road-casualty-statistics-collision-2024.csv` | Raw file as downloaded. Do not edit. |
-| `prepare_dft2024.py` | Keeps the conditions known at the time of the crash, maps severity to labels, writes the two files below. Run: `python prepare_dft2024.py` |
-| `UK_collisions_model_ready.csv` | 100,927 rows × 21 columns — first version (Sep 28), kept for reference |
-| `UK_collisions_final.csv` | 100,927 rows × 17 columns (16 features + `severity`) — **the final modelling file**, written by `../Analysis/01_EDA_and_Data_Preparation.ipynb` |
+| `dft-road-casualty-statistics-collision-2024.csv` | Raw collision file as downloaded. Do not edit. |
+| `dft-road-casualty-statistics-vehicle-2024.csv` | Raw 2024 vehicle file from UK DfT Open Data (`collision_index` join for 9 pre-crash vehicle & driver features). Do not edit. |
+| `prepare_dft2024.py` | Keeps the conditions known at the time of the crash, merges collision-level pre-crash vehicle/driver features (`vehicle_type`, `driver_age`, `sex_of_driver`, `vehicle_manoeuvre`, `junction_location`, `journey_purpose`, `towing_and_articulation`, `propulsion_type`, `vehicle_age`), maps severity to labels, writes the two files below. Run: `python prepare_dft2024.py` |
+| `UK_collisions_model_ready.csv` | 100,927 rows × 30 columns — intermediate dataset with 9 pre-crash vehicle & driver features |
+| `UK_collisions_final.csv` | 100,927 rows × 32 columns (25 base pre-crash features + 6 engineered interaction features + `severity`) — **the final modelling file**, written by `../Analysis/01_EDA_and_Data_Preparation.ipynb` |
 | `UK_profile.txt` | Class counts, missing-value rates per column, column list |
 
 ## What the script removes, and why
@@ -63,5 +64,5 @@ Location coordinates, police force, reference numbers and the `_historic` column
 ## Analysis notebooks (`../Analysis/`)
 
 - `01_EDA_and_Data_Preparation.ipynb` — EDA charts, data issues, builds `UK_collisions_final.csv`. Figures `01`–`07` are saved in `../Analysis/figures/`.
-- `02_Baseline_Models.ipynb` — first untuned comparison of Logistic Regression, Random Forest, and XGBoost (`08_confusion_matrix.png`).
+- `02_Baseline_Models.ipynb` — first untuned comparison of Logistic Regression, Decision Tree, Random Forest, and XGBoost (`08_confusion_matrix.png`).
 - `03_Model_Tuning_and_Evaluation.ipynb` — hyperparameter tuning (5-fold CV), balancing comparison (none, class weights, random under-sampling, SMOTE-NC), feature selection check, held-out test evaluation, and SHAP explanations (`09`–`12` figures and `../Analysis/results/`).

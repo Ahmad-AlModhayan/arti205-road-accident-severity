@@ -1,9 +1,11 @@
 """
-Profile the DfT 2024 collision file and write the numbers you need for the report.
+Profile the DfT 2024 collision and vehicle files and write the numbers you need for the report.
 
-Get the file (one click, ~20 MB):
+Get the files (~20 MB each):
   https://www.kaggle.com/datasets/juharimat/road-safety-data-collisions-2024
-Unzip and put dft-road-casualty-statistics-collision-2024.csv in this folder.
+  https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-vehicle-2024.csv
+Unzip and put dft-road-casualty-statistics-collision-2024.csv and
+dft-road-casualty-statistics-vehicle-2024.csv in this folder.
 
 Optional second year — add dft-road-casualty-statistics-collision-2023.csv from:
   https://www.kaggle.com/datasets/ngducchilly/uk-road-accident-data-19792024
@@ -17,11 +19,128 @@ from pathlib import Path
 import pandas as pd
 
 FILES = sorted(Path(".").glob("dft-road-casualty-statistics-collision-*.csv"))
+VEH_FILES = sorted(Path(".").glob("dft-road-casualty-statistics-vehicle-*.csv"))
 OUT = Path("UK_collisions_model_ready.csv")
 PROFILE = Path("UK_profile.txt")
 
 TARGET = "collision_severity"
 SEV = {1: "Fatal", 2: "Serious", 3: "Slight"}
+
+VEHICLE_PRIORITY = [
+    "Heavy goods (7.5t+)",
+    "Large / other motorcycle",
+    "Moped / small motorcycle",
+    "Pedal cycle",
+    "Van / medium goods",
+    "Bus / Coach",
+    "Other (e-scooter / agri / mobility)",
+    "Car / Taxi",
+    "Unknown",
+]
+VEHICLE_RANK = {k: i for i, k in enumerate(VEHICLE_PRIORITY)}
+
+
+def map_vehicle_group(code: int) -> str:
+    if code == 1:
+        return "Pedal cycle"
+    if code in (2, 3):
+        return "Moped / small motorcycle"
+    if code in (4, 5, 23, 97):
+        return "Large / other motorcycle"
+    if code in (8, 9):
+        return "Car / Taxi"
+    if code in (10, 11):
+        return "Bus / Coach"
+    if code in (19, 20, 98):
+        return "Van / medium goods"
+    if code == 21:
+        return "Heavy goods (7.5t+)"
+    if code in (16, 17, 18, 22, 33, 90):
+        return "Other (e-scooter / agri / mobility)"
+    return "Unknown"
+
+
+MANOEUVRE_MAP = {
+    1: "Reversing", 2: "Parked", 3: "Waiting to go ahead", 4: "Slowing or stopping",
+    5: "Moving off", 6: "U-turn", 7: "Turning left", 8: "Waiting to turn left",
+    9: "Turning right", 10: "Waiting to turn right", 11: "Changing lane left",
+    12: "Changing lane right", 13: "Overtaking moving", 14: "Overtaking stationary",
+    15: "Overtaking nearside", 19: "Going ahead", 20: "Parking / manoeuvring",
+    99: "Unknown", -1: "Unknown",
+}
+JLOC_MAP = {
+    0: "Not at junction", 1: "Approaching junction", 2: "Cleared junction",
+    3: "Leaving roundabout", 4: "Entering roundabout", 5: "Leaving main road",
+    6: "Entering main road", 7: "Entering slip road", 8: "Mid junction",
+    9: "Unknown", -1: "Unknown",
+}
+SEX_MAP = {1: "Male", 2: "Female", 3: "Unknown", -1: "Unknown"}
+JOURNEY_MAP = {
+    1: "Work journey", 2: "Commuting", 6: "Unknown", 7: "School / education",
+    8: "Emergency response", 9: "Personal / leisure", -1: "Unknown",
+}
+TOW_MAP = {
+    0: "No tow / articulation", 1: "Articulated vehicle", 2: "Double / multiple trailer",
+    3: "Caravan", 4: "Single trailer", 5: "Other tow", 9: "Unknown", -1: "Unknown",
+}
+PROP_MAP = {
+    1: "Petrol", 2: "Diesel", 3: "Electric", 5: "Gas", 6: "Gas / LPG",
+    7: "Gas / bi-fuel", 8: "Hybrid electric", 12: "Electric diesel", -1: "Unknown",
+}
+
+
+def aggregate_vehicles(veh_files: list[Path]) -> pd.DataFrame:
+    use = [
+        "collision_index", "vehicle_reference", "vehicle_type", "age_of_driver",
+        "vehicle_manoeuvre", "junction_location", "sex_of_driver",
+        "journey_purpose_of_driver", "towing_and_articulation", "propulsion_code",
+        "age_of_vehicle",
+    ]
+    veh = pd.concat(
+        [pd.read_csv(f, usecols=use, low_memory=False) for f in veh_files],
+        ignore_index=True,
+    )
+    veh["vehicle_type_grp"] = veh["vehicle_type"].map(map_vehicle_group)
+    veh["_rank"] = veh["vehicle_type_grp"].map(VEHICLE_RANK)
+    vt = (
+        veh.sort_values("_rank")
+        .drop_duplicates("collision_index")[["collision_index", "vehicle_type_grp"]]
+        .rename(columns={"vehicle_type_grp": "vehicle_type"})
+    )
+    va = (
+        veh[veh["age_of_driver"] > 0]
+        .groupby("collision_index")["age_of_driver"]
+        .mean()
+        .rename("mean_driver_age")
+    )
+    v1 = veh.sort_values("vehicle_reference").drop_duplicates("collision_index").copy()
+    v1["vehicle_manoeuvre"] = v1["vehicle_manoeuvre"].map(MANOEUVRE_MAP).fillna("Unknown")
+    v1["junction_location"] = v1["junction_location"].map(JLOC_MAP).fillna("Unknown")
+    v1["sex_of_driver"] = v1["sex_of_driver"].map(SEX_MAP).fillna("Unknown")
+    v1["journey_purpose"] = v1["journey_purpose_of_driver"].map(JOURNEY_MAP).fillna("Unknown")
+    v1["towing_and_articulation"] = v1["towing_and_articulation"].map(TOW_MAP).fillna("Unknown")
+    v1["propulsion_type"] = v1["propulsion_code"].map(PROP_MAP).fillna("Unknown")
+    v1["vehicle_age"] = (
+        pd.cut(v1["age_of_vehicle"].where(v1["age_of_vehicle"] >= 0), bins=[-1, 3, 8, 14, 100],
+               labels=["0-3 yrs", "4-8 yrs", "9-14 yrs", "15+ yrs"])
+        .astype(str)
+        .replace("nan", "Unknown")
+    )
+    agg = vt.merge(va, on="collision_index", how="left").merge(
+        v1[["collision_index", "vehicle_manoeuvre", "junction_location", "sex_of_driver",
+            "journey_purpose", "towing_and_articulation", "propulsion_type", "vehicle_age"]],
+        on="collision_index", how="left",
+    )
+    agg["driver_age"] = (
+        pd.cut(agg["mean_driver_age"], bins=[0, 24, 39, 59, 120], labels=["Under 25", "25-39", "40-59", "60+"])
+        .astype(str)
+        .replace("nan", "Unknown")
+    )
+    return agg[[
+        "collision_index", "vehicle_type", "driver_age", "sex_of_driver",
+        "vehicle_manoeuvre", "junction_location", "journey_purpose",
+        "towing_and_articulation", "propulsion_type", "vehicle_age",
+    ]]
 
 # Conditions known at the time of the crash. Excludes casualty counts and
 # anything recorded as part of the outcome.
@@ -72,6 +191,16 @@ def main() -> None:
         print("   available columns:", list(df.columns))
     cols = [c for c in KEEP if c in df.columns]
     df = df[cols]
+
+    if VEH_FILES:
+        veh_agg = aggregate_vehicles(VEH_FILES)
+        df = df.merge(veh_agg, on="collision_index", how="left")
+        for c in [
+            "vehicle_type", "driver_age", "sex_of_driver", "vehicle_manoeuvre",
+            "junction_location", "journey_purpose", "towing_and_articulation",
+            "propulsion_type", "vehicle_age",
+        ]:
+            df[c] = df[c].fillna("Unknown")
 
     df[TARGET] = df[TARGET].map(SEV).fillna(df[TARGET].astype(str))
     df.to_csv(OUT, index=False)

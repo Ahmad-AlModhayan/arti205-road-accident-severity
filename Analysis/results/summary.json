@@ -1,7 +1,7 @@
 {
   "final_model": "Random Forest",
   "final_balancing": "Class weights",
-  "final_uses_13_features": false,
+  "final_uses_28_features": false,
   "explained_model": "Random Forest",
   "best_params": {
     "Logistic Regression": {
@@ -16,12 +16,9 @@
       "max_depth": 6,
       "n_estimators": 600
     },
-    "Neural network (MLP)": {
-      "alpha": 0.01,
-      "hidden_layer_sizes": [
-        128,
-        64
-      ]
+    "Decision Tree": {
+      "max_depth": null,
+      "min_samples_leaf": 5
     }
   },
   "test": [
@@ -40,50 +37,50 @@
     {
       "model": "Logistic Regression",
       "balancing": "SMOTE-NC",
-      "accuracy": 0.5144,
-      "balanced accuracy": 0.4384,
-      "macro F1": 0.3406,
-      "recall Slight": 0.5801,
-      "recall Serious": 0.3084,
-      "recall Fatal": 0.4267,
-      "precision Fatal": 0.0348,
-      "AUC (macro, one-vs-rest)": 0.6059
+      "accuracy": 0.5992,
+      "balanced accuracy": 0.4724,
+      "macro F1": 0.3892,
+      "recall Slight": 0.6782,
+      "recall Serious": 0.3589,
+      "recall Fatal": 0.38,
+      "precision Fatal": 0.0513,
+      "AUC (macro, one-vs-rest)": 0.6719
     },
     {
       "model": "Random Forest",
       "balancing": "Class weights",
-      "accuracy": 0.5552,
-      "balanced accuracy": 0.4534,
-      "macro F1": 0.3709,
-      "recall Slight": 0.6062,
-      "recall Serious": 0.4041,
-      "recall Fatal": 0.35,
-      "precision Fatal": 0.0434,
-      "AUC (macro, one-vs-rest)": 0.6355
+      "accuracy": 0.6691,
+      "balanced accuracy": 0.4579,
+      "macro F1": 0.4349,
+      "recall Slight": 0.751,
+      "recall Serious": 0.4361,
+      "recall Fatal": 0.1867,
+      "precision Fatal": 0.0944,
+      "AUC (macro, one-vs-rest)": 0.714
     },
     {
       "model": "XGBoost",
       "balancing": "Class weights",
-      "accuracy": 0.5549,
-      "balanced accuracy": 0.4229,
-      "macro F1": 0.3654,
-      "recall Slight": 0.6033,
-      "recall Serious": 0.4185,
-      "recall Fatal": 0.2467,
-      "precision Fatal": 0.0383,
-      "AUC (macro, one-vs-rest)": 0.6253
+      "accuracy": 0.6044,
+      "balanced accuracy": 0.4715,
+      "macro F1": 0.4057,
+      "recall Slight": 0.6458,
+      "recall Serious": 0.4922,
+      "recall Fatal": 0.2767,
+      "precision Fatal": 0.053,
+      "AUC (macro, one-vs-rest)": 0.7063
     },
     {
-      "model": "Neural network (MLP)",
+      "model": "Decision Tree",
       "balancing": "SMOTE-NC",
-      "accuracy": 0.5857,
-      "balanced accuracy": 0.3886,
-      "macro F1": 0.3633,
-      "recall Slight": 0.6627,
-      "recall Serious": 0.3664,
-      "recall Fatal": 0.1367,
-      "precision Fatal": 0.0328,
-      "AUC (macro, one-vs-rest)": 0.5895
+      "accuracy": 0.6217,
+      "balanced accuracy": 0.3942,
+      "macro F1": 0.3804,
+      "recall Slight": 0.712,
+      "recall Serious": 0.3638,
+      "recall Fatal": 0.1067,
+      "precision Fatal": 0.0497,
+      "AUC (macro, one-vs-rest)": 0.5809
     }
   ]
 }

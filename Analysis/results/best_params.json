@@ -11,11 +11,8 @@
     "max_depth": 6,
     "n_estimators": 600
   },
-  "Neural network (MLP)": {
-    "alpha": 0.01,
-    "hidden_layer_sizes": [
-      128,
-      64
-    ]
+  "Decision Tree": {
+    "max_depth": null,
+    "min_samples_leaf": 5
   }
 }

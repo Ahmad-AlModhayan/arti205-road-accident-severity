@@ -1,6 +1,6 @@
 UK DfT road casualty statistics — collisions 2024
 source: UK Department for Transport, obtained via Kaggle
-rows: 100,927   columns kept: 21   duplicates: 0
+rows: 100,927   columns kept: 30   duplicates: 0
 
 Target — collision_severity
   Fatal       1,502    1.49%
@@ -44,6 +44,15 @@ Columns kept
   urban_or_rural_area                           numeric       3 distinct
   number_of_vehicles                            numeric      15 distinct
   local_authority_ons_district                  text        351 distinct
+  vehicle_type                                  text          9 distinct
+  driver_age                                    text          5 distinct
+  sex_of_driver                                 text          3 distinct
+  vehicle_manoeuvre                             text         18 distinct
+  junction_location                             text         10 distinct
+  journey_purpose                               text          6 distinct
+  towing_and_articulation                       text          7 distinct
+  propulsion_type                               text          9 distinct
+  vehicle_age                                   text          5 distinct
 
 Note: junction_control is -1 for most collisions that are not at a junction,
 so its -1 count is mostly 'not applicable', not truly missing.
